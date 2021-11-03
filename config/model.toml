@@ -1,0 +1,119 @@
+output_dir = ""
+pdb = true
+wandb_mode = "online"
+_unique_marker = "model"
+_time_tag = "2021-07-22T17:57:58"
+
+[train]
+dataset = "two4two_obj_color_and_spherical"
+image_size = 128
+output_dir = "../models/"
+label_noise = 0.1
+n_train_samples = 2500000
+batch_size = 40
+num_workers = 4
+device = "cpu"
+
+[model]
+prior = "normal"
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "no_fade_out"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 48
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 128
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 384
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 512
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 512
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 512
+coupling = "affine"
+conv_1x1_kernel = false
+
+[[model.layers]]
+name = "fade_out_and_pool"
+channels_to_keep = "half"
+pool = 2
+
+[[model.layers]]
+name = "flow_blocks"
+n_blocks = 32
+block_channels = 512
+coupling = "affine"
+conv_1x1_kernel = true
+
+[classifiers]
+[[classifiers.classifiers]]
+after_layer = 641
+label_name = "obj_name"
+classifier = "linear"
+backpropagate_loss = true
+loss_weight = 0.0001
+in_channels = 768
+
+[classifiers.classifiers.lr_scheduler]
+name = "hill"
+learning_rate = 0.1
+
+[train.lr_scheduler]
+name = "fade_in_cosine"
+learning_rate = 5e-5
+fade_in_steps = 200000

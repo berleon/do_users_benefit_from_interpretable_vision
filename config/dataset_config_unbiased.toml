@@ -1,0 +1,27 @@
+[[dataset]]
+sampler = "dubfiv.data_generation.SamplerObjColorAndSpherical"
+output_dir = "data/two4two_obj_color_and_spherical"
+force_overwrite = false
+n_processes = 8
+download_blender = true
+debug = false
+unbiased = true
+
+
+[[dataset.split]]
+name = "train"
+n_samples = 60000
+
+[[dataset.split]]
+name = "validation"
+n_samples = 5000
+
+[[dataset.split]]
+name = "test"
+n_samples = 5000
+
+
+[dataset.sampler_config]
+obj_color_slope = 2.5
+obj_color_uniform_prob = 0.15
+spherical_uniform_prob = 0.33

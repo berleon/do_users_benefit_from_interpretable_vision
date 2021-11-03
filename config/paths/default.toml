@@ -1,0 +1,2 @@
+wandb = './wandb'
+dataset_dirs='./data:../data'
